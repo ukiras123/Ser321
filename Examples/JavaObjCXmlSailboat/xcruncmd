@@ -1,0 +1,5 @@
+#!/bin/bash
+echo run with ./obj/SailboatMac
+echo compiling the source to create obj/SailboatMac
+mkdir obj
+xcrun gcc -x objective-c -framework Foundation -o obj/SailboatMac src/objc/Sailboat.h src/objc/Sailboat.m src/objc/main.m

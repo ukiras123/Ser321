@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.6.0_22" class="java.beans.XMLDecoder">
+<object class="cst502.objcXml.Sailboat">
+<void property="displacement">
+<double>9500.000000</double>
+</void>
+<void property="beam">
+<double>9.500000</double>
+</void>
+<void property="name">
+<string>Ceres</string>
+</void>
+<void property="model">
+<string>Contessa32</string>
+</void>
+<void property="lengthWL">
+<double>24.000000</double>
+</void>
+</object>
+</java>

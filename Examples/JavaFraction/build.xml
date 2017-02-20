@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project name="Ser321 Simple example of Ant to build a Java program."
+         default="targets" basedir="."
+         xmlns:dn="antlib:org.apache.ant.dotnet"
+         xmlns="antlib:org.apache.tools.ant"
+         xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks">
+
+   <property name="src.dir" value="src"/>
+   <property name="build" value="classes"/>
+   <property environment="env"/>
+   <property name="user" value="${env.USERNAME}"/>
+
+   <target name="targets">
+      <echo message="Targets are clean, prepare, build, execute, and targets"/>
+   </target>
+
+   <path id="compile.classpath">
+      <pathelement location="${build}"/>
+   </path>
+
+   <target name="prepare">
+      <mkdir dir="${build}" />
+   </target>
+
+   <target name="clean">
+      <delete dir="${build}" failonerror="false"/>
+   </target>
+
+   <target name="build" depends="prepare">
+      <javac srcdir="${src.dir}"
+             includeantruntime="false"
+             destdir="${build}">
+         <classpath refid="compile.classpath"/>
+      </javac>
+   </target>
+
+   <target name="execute" depends="build"
+           description="Run the program">
+         <echo message="command line execute: java -cp classes Fraction" />
+         <java classname="Fraction" fork="yes">
+           <classpath refid="compile.classpath"/>
+         </java>
+   </target>
+
+</project>

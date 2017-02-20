@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc -L../../../../../../usr/local/lib -lfltk -lstdc++">
+      <target file="mediaClient" lastModified="15a1a62ad98">
+         <source file="../obj/MediaClient.o" lastModified="15a1a62a9b0"/>
+         <source file="../obj/MediaClientGui.o" lastModified="15a1a62a9b0"/>
+      </target>
+   </processor>
+</history>

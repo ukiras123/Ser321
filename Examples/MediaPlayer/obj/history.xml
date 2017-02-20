@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc noversion nomachine -std=c++11 -c -I../../../../../usr/include/jsoncpp">
+      <target file="MediaClientGui.o" lastModified="15a420a55d0">
+         <source file="../src/cpp/MediaClientGui.cpp" lastModified="14f8625ac20"/>
+      </target>
+      <target file="MediaClient.o" lastModified="15a420a51e8">
+         <source file="../src/cpp/MediaClient.cpp" lastModified="14f86223950"/>
+      </target>
+   </processor>
+</history>

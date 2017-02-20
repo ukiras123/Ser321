@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_22" class="java.beans.XMLDecoder"> 
+ <object class="cst502.objcXml.Sailboat"> 
+  <void property="beam"> 
+   <double>9.3</double> 
+  </void> 
+  <void property="displacement"> 
+   <double>5500.0</double> 
+  </void> 
+  <void property="lengthWL"> 
+   <double>21.9</double> 
+  </void> 
+  <void property="model"> 
+   <string>Ericson26</string> 
+  </void> 
+  <void property="name"> 
+   <string>GrandCru</string> 
+  </void> 
+ </object> 
+</java> 
