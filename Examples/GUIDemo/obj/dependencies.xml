@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dependencies>
+   <includePath signature="/I../../../../../usr/local/include">
+      <source file="../src/cpp/MediaClient.cpp" lastModified="14f8f2eb4d8">
+         <include file="../src/cpp/MediaClientGui.cpp"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Window.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Button.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Output.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Text_Display.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Text_Buffer.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Input_Choice.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Multiline_Input.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Tree.H"/>
+         <sysinclude file="../../../../../../usr/include/stdio.h"/>
+         <sysinclude file="../../../../../../usr/include/stdlib.h"/>
+      </source>
+      <source file="../src/cpp/MediaClientGui.cpp" lastModified="15a331a8f18">
+         <sysinclude file="../../../../../../usr/include/FL/Fl.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Window.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Button.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Output.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Tree.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Tree_Item.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Menu_Bar.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Choice.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Text_Display.H"/>
+         <sysinclude file="../../../../../../usr/include/FL/Fl_Text_Buffer.H"/>
+         <sysinclude file="../../../../../../usr/include/stdio.h"/>
+         <sysinclude file="../../../../../../usr/include/stdlib.h"/>
+      </source>
+   </includePath>
+</dependencies>

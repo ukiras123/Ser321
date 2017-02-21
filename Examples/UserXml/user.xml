@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="9-ea" class="java.beans.XMLDecoder">
+ <object class="ser321.serialize.User">
+  <void property="first">
+   <string>Tim</string>
+  </void>
+  <void property="last">
+   <string>Lindquist</string>
+  </void>
+  <void property="userId">
+   <string>myId</string>
+  </void>
+  <void property="userPwd">
+   <string>myPwd</string>
+  </void>
+ </object>
+</java>

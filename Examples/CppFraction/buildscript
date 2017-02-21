@@ -1,0 +1,9 @@
+#! /bin/bash
+# to compile in a single step uncomment the command below.
+#g++ -g -ggdb -std=c++14 src/Fraction.cpp src/main.cpp -o fraction -lstdc++
+
+# to compile in two steps for debugging, use the two gcc commands below. The
+# first compiles only producing the .o files (object files). The second
+# command links the resulting object files creating the executable file.
+g++ -g -ggdb -c -std=c++14 src/Fraction.cpp src/main.cpp
+g++ -g -ggdb main.o Fraction.o -lstdc++ -o fraction

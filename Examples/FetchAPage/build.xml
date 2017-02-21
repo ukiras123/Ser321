@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project name="Ser321 Java simple URLConnection example."
+         default="targets" basedir="."
+         xmlns:dn="antlib:org.apache.ant.dotnet"
+         xmlns="antlib:org.apache.tools.ant"
+         xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks">
+
+   <property name="src.dir" value="src"/>
+   <property name="build" value="classes"/>
+   <property name="lib" value="lib"/>
+   <property name="url" value="http://pooh.poly.asu.edu/Ser321"/>
+   <property name="url1" value="http://www.omdbapi.com/?t=Frozen&amp;y=&amp;plot=short&amp;r=json"/>
+   <property environment="env"/>
+   <property name="user" value="${env.USERNAME}"/>
+
+   <target name="targets">
+      <echo message="Targets are clean, prepare, build, execute, and targets"/>
+      <echo message="Run with: java -cp classes ser321.sockets.FetchAPage ${url}"/>
+   </target>
+
+   <path id="compile.classpath">
+      <pathelement location="${build}"/>
+   </path>
+
+   <target name="prepare">
+      <mkdir dir="${build}" />
+      <mkdir dir="${lib}" />
+   </target>
+
+   <target name="clean">
+      <delete dir="${build}" failonerror="false"/>
+      <delete file="${lib}/fetchapage.jar" failonerror="false"/>
+   </target>
+
+   <target name="build" depends="prepare">
+      <echo message="execute with: java -cp classes ser321.sockets.FetchAPage ${url}"/>
+      <echo message="or with: java -jar lib/fetchapage.jar &quot;${url1}&quot;"/>
+      <echo message="or with: ant execute -Durl=${url}"/>
+      <javac srcdir="${src.dir}"
+             includeantruntime="false"
+             destdir="${build}">
+         <classpath refid="compile.classpath"/>
+      </javac>
+      <jar destfile="lib/fetchapage.jar"> <!-- manifest="manifestServer.txt"> -->
+        <fileset dir="${build}" includes="ser321/sockets/FetchAPage.class"/>
+        <manifest>
+          <attribute name="Main-Class"
+                     value="ser321.sockets.FetchAPage"/>
+        </manifest>
+      </jar>
+   </target>
+
+   <target name="execute" depends="build"
+           description="Start program">
+         <echo message="user.dir is: ${user.dir}"/>
+         <echo message="command line execute: java -cp classes ser321.sockets.FetchAPage ${url}"/>
+         <java classname="ser321.sockets.FetchAPage" fork="yes">
+           <classpath refid="compile.classpath"/>
+           <arg value="${url}"/>
+         </java>
+   </target>
+
+</project>
