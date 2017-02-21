@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dependencies>
+   <includePath signature="">
+      <source file="../src/main.cpp" lastModified="150112e6668">
+         <include file="../src/Fraction.hpp"/>
+         <sysinclude file="../../../../../../usr/include/stdio.h"/>
+         <sysinclude file="../../../../../../usr/include/stdlib.h"/>
+      </source>
+      <source file="../src/Fraction.cpp" lastModified="1501127abc0">
+         <include file="../src/Fraction.hpp"/>
+         <sysinclude file="../../../../../../usr/include/stdlib.h"/>
+      </source>
+      <source file="../src/Fraction.hpp" lastModified="15011287ac8">
+      </source>
+   </includePath>
+</dependencies>

@@ -130,10 +130,17 @@ public:
       std::string aStr("unknown");
       std::string aTitle(item->label());
       switch ( tree->callback_reason() ) {  // reason callback was invoked
+<<<<<<< HEAD
         case       FL_TREE_REASON_NONE: {aStr = "none"; break;}
         case     FL_TREE_REASON_OPENED: {aStr = "opened";break;}
         case     FL_TREE_REASON_CLOSED: {aStr = "closed"; break;}
         case   FL_TREE_REASON_SELECTED: {
+=======
+        case FL_TREE_REASON_NONE: {aStr = "none"; break;}
+        case FL_TREE_REASON_OPENED: {aStr = "opened";break;}
+        case FL_TREE_REASON_CLOSED: {aStr = "closed"; break;}
+        case FL_TREE_REASON_SELECTED: {
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
            aStr = "selection";
            titleInput->value(aTitle.c_str());
            mediaType->value(1);
@@ -274,7 +281,11 @@ public:
 
 // main method for this program.
 int main(int argc, char * argv[]) {
+<<<<<<< HEAD
    std::string nameStr = (argc>1)?argv[1]:"Lindquist Library";
+=======
+   std::string nameStr = (argc>1)?argv[1]:"Movie Library";
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    MediaClient mc(nameStr);
    return (Fl::run());
 }

@@ -89,9 +89,15 @@ class MediaClient : public MediaClientGui {
       std::string aStr("unknown");
       switch ( tree->callback_reason() ) {  // reason callback was invoked
       case FL_TREE_REASON_NONE: {aStr = "none"; break;}
+<<<<<<< HEAD
         case     FL_TREE_REASON_OPENED: {aStr = "opened";break;}
       case     FL_TREE_REASON_CLOSED: {aStr = "closed"; break;}
       case   FL_TREE_REASON_SELECTED: {aStr = "selected"; break;}
+=======
+      case FL_TREE_REASON_OPENED: {aStr = "opened";break;}
+      case FL_TREE_REASON_CLOSED: {aStr = "closed"; break;}
+      case FL_TREE_REASON_SELECTED: {aStr = "selected"; break;}
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 //        case FL_TREE_REASON_RESELECTED: aStr = "opened";
       case FL_TREE_REASON_DESELECTED: {aStr = "deselected"; break;}
 //      case FL_TREE_REASON_DRAGGED: {aStr = "dragged"; break;}

@@ -1,0 +1,48 @@
+<project name="Ser321 Java XML Serialization" default="targets" basedir=".">
+
+   <!-- set global properties for this build -->
+   <property name="src" value="./src" />
+   <property name="build" value="./classes" />
+   <property name="lib" value="./lib" />
+
+   <path id="compile.classpath">
+      <pathelement location="${build}"/>
+   </path>
+
+   <target name="targets">
+      <echo message="targets are clean, prepare, build, execute"/>
+   </target>
+
+   <target name="prepare">
+      <!-- Create the time stamp -->
+      <tstamp/>
+      <!-- Create the build directory structure used by compile -->
+      <echo message="home defined as: ${home}" />
+      <mkdir dir="${build}" />
+   </target>
+
+   <target name="build" depends="prepare"
+           description="Compile Java sources">
+      <javac srcdir="${src}"
+             includeantruntime="false"
+             destdir="${build}">
+         <classpath refid="compile.classpath"/>
+      </javac>
+   </target>
+
+   <target name="execute" depends="build"
+           description="Start program">
+         <echo message="user.dir is: ${user.dir}"/>
+         <echo message="command line execute: java -cp classes ser321.serialize.UserXMLSerialize" />
+         <java classname="ser321.serialize.UserXMLSerialize" fork="yes">
+           <classpath refid="compile.classpath"/>
+         </java>
+   </target>
+
+   <target name="clean">
+     <!-- Delete the ${build} directory tree -->
+     <delete dir="${build}" />
+     <delete file="user.xml"/>
+   </target>
+
+</project>

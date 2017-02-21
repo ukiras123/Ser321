@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc -L../../../../../../usr/lib -lstdc++">
+      <target file="fraction" lastModified="159a3e91698">
+         <source file="../obj/main.o" lastModified="159a3e912b0"/>
+         <source file="../obj/Fraction.o" lastModified="159a3e91698"/>
+      </target>
+   </processor>
+</history>

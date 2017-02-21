@@ -7,6 +7,10 @@
    <property name="classes.dir" value="classes"/>
    <property name="host.name" value="127.0.0.1"/>
    <property name="port.num" value="8080"/>
+<<<<<<< HEAD
+=======
+   <!-- <property name="json.file.name" value="StudentLibraryMethods.json"/> -->
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    <property environment="env"/>
    <!--Set the ostype property: <property name="ostype" value="${env.OSTYPE}"/>-->
     <condition property="ostype" value="${env.OSTYPE}">
@@ -33,7 +37,13 @@
       <echo message="base directory is: ${basedir}"/>
       <echo message="ostype is ${ostype} and dyldpath is ${dyldpath}"/>
       <echo message="on MacOSX define DYLD_FALLBACK_LIBRARY_PATH. Its: ${dyldpath} For macport and manual builds use /opt/local/lib:/usr/local/lib"/>
+<<<<<<< HEAD
       <echo message="invoke java http server with: java -cp classes:lib/jsonrpcserver.jar server.MedialLibraryHttpServer ${port.num}"/>
+=======
+<!--      <echo message="invoke java http client with: java -cp classes:lib/jsonrpcclient.jar server.StudentCollectionClient ${host.name} ${port.num}"/> -->
+      <echo message="invoke java http server with: java -cp classes:lib/jsonrpcserver.jar server.MovieLibraryHttpServer ${port.num}"/>
+      
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    </target>
 
    <path id="compile.classpath">
@@ -148,6 +158,24 @@
             includeantruntime="false">
         <classpath refid="compile.classpath"/>
     </javac>
+<<<<<<< HEAD
+=======
+<!--    <jar destfile="${lib.dir}/jsonrpcserver.jar">
+            <fileset dir="${classes.dir}" includes="edu/asu/ser/jsonrpc/server/*.class"/>
+            <fileset dir="${classes.dir}" includes="edu/asu/ser/jsonrpc/common/*.class"/>
+            <zipgroupfileset dir="${lib.dir}">
+                 <include name="json.jar"/>
+            </zipgroupfileset>
+    </jar>
+    <jar destfile="${lib.dir}/jsonrpcclient.jar">
+            <fileset dir="${classes.dir}" includes="edu/asu/ser/jsonrpc/client/*.class"/>
+            <fileset dir="${classes.dir}" includes="edu/asu/ser/jsonrpc/proxy/*.class"/>
+            <fileset dir="${classes.dir}" includes="edu/asu/ser/jsonrpc/common/*.class"/>
+            <zipgroupfileset dir="${lib.dir}">
+                 <include name="json.jar"/>
+            </zipgroupfileset>
+    </jar> -->
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    </target>
 
    <target name="generate.java.proxy"
@@ -165,5 +193,25 @@
          <arg value="server.MovieLibrary"/>
          <arg value="server.MovieDescription"/>
       </java>
+<<<<<<< HEAD
    </target>
+=======
+		<move file="${basedir}/MovieLibraryHttpProxy.java"
+            tofile="${src.dir}/java/client/MovieLibraryHttpProxy.java"/>
+   </target>
+
+   
+<!--   <target name="build.java.client" depends="generate.java.proxy"
+          description="Compile Java client sources">
+
+     <echo message="execute client: java -cp classes:lib/jsonrpcclient.jar client.MovieLibraryClient localhost 8080"/>
+     <javac srcdir="${src.dir}/java/client"
+            destdir="${classes.dir}"
+            includeantruntime="false">
+        <classpath refid="compile.classpath"/>
+     </javac>
+   </target>
+   -->
+
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 </project>

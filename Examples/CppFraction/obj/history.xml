@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc noversion nomachine -std=c++14 -c">
+      <target file="Fraction.o" lastModified="159a3e91698">
+         <source file="../src/Fraction.cpp" lastModified="1501127a3f0"/>
+      </target>
+      <target file="main.o" lastModified="159a3e912b0">
+         <source file="../src/main.cpp" lastModified="150112e5ab0"/>
+      </target>
+   </processor>
+</history>

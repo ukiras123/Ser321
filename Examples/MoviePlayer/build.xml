@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<project name="Sample movie player GUIs in C++ and Java" default="targets">
+   <taskdef resource="cpptasks.tasks"/>
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+   
+   <property name="src.dir" value="src"/>
+   <property name="dist.dir" value="bin"/>
+   <property name="classes.dir" value="classes"/>
+   <property name="docs.dir" value="doc"/>
+   <property name="obj.dir" value="obj"/>
+   <property name="host" value="127.0.0.1"/>
+   <property name="port.num.streamer" value="8888"/>
+   <property name="media.dir" value="MediaFiles"/>
+   <property environment="env"/>
+   <property name="ostype" value="${env.OSTYPE}"/>
+
+   <target name="targets">
+      <echo message="Targets are clean, prepare, build.cpp, build.java, build.all, execute.java, execute.streamer, targets"/>
+      <echo message="base directory is: ${basedir}"/>
+      <echo message="execute C++ client with: ./bin/sampleMovieClient YourName ${host} ${port.num.streamer}"/>
+      <echo message="invoke java client with: java -cp classes:lib/movieGui.jar ser321.movie.SampleMovieClient YourName ${host} ${port.num.streamer}"/>
+   </target>
+
+   <path id="compile.classpath">
+      <pathelement location="${classes.dir}"/>
+      <fileset dir="${basedir}/lib">
+         <include name="movieGui.jar"/>
+      </fileset>
+   </path>
+
+   <target name="clean">
+      <delete dir="${classes.dir}" failonerror="false"/>
+      <delete dir="${obj.dir}" failonerror="false"/>
+      <delete dir="${dist.dir}" failonerror="false"/>
+   </target>
+
+   <target name="prepare">
+      <mkdir dir="${classes.dir}"/>
+      <mkdir dir="${dist.dir}" />
+      <mkdir dir="${obj.dir}" />
+      <if>
+         <isset property="env.USERNAME"/>
+         <then>
+            <echo message="detected username is: ${env.USERNAME}"/>
+         </then>
+      <elseif>
+         <isset property="env.USER"/>
+         <then>
+            <echo message="detected user is: ${env.USER}"/>
+         </then>
+      </elseif>
+      </if>
+      <echo message="host name is: ${os.name}"/>
+      <echo message="host arch is: ${os.arch}"/>
+      <echo message="host version is: ${os.version}"/>
+      <echo message="base directory is: ${basedir}"/>
+
+      <!-- Platform identification -->
+      <condition property="build.host.islinux">
+        <and>
+          <os family="unix" />
+          <not>
+            <contains string="${os.name}" substring="mac"
+                      casesensitive="false" />
+          </not>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="linux">
+        <isset property="build.host.islinux" />
+      </condition>
+
+      <condition property="build.host.ismac">
+        <and>
+          <os family="unix" />
+          <contains string="${os.name}" substring="mac" casesensitive="false"/>
+        </and>
+      </condition>
+      <condition property="build.host.platform" value="mac">
+        <isset property="build.host.ismac" />
+      </condition>
+
+      <fail unless="build.host.platform"
+            message="Building on ${os.name} is not supported" />
+      <echo message="build.host.platform is: ${build.host.platform}"/>
+      <if>
+         <isset property="build.host.ismac"/>
+         <then>
+            <echo message="detected a mac host"/>
+            <property name="cxxflag" value="-std=c++14"/>
+            <property name="includepath" value="/opt/local/include:/usr/local/include"/>
+            <property name="client.lib.path" value="/opt/local/lib"/>
+            <property name="client.lib.list" value="c++,fltk,stdc++"/>
+         </then>
+      <elseif>
+         <isset property="build.host.islinux"/>
+         <then>
+            <echo message="detected a linux host"/>
+            <property name="cxxflag" value="-std=c++14"/>
+            <property name="includepath" value="/usr/include/jsoncpp"/>
+            <property name="client.lib.path" value="/usr/local/lib"/>
+            <property name="client.lib.list" value="fltk,pthread,stdc++"/>
+         </then>
+      </elseif>
+      <else>
+         <echo message="failed to detect a host I know how to build on"/>
+      </else>
+   </if>
+   </target>
+
+   <target name="build.all"
+           depends="clean,prepare,build.cpp,build.java"
+           description="Clean then build cpp, and java"/>
+
+  <target name="build.java" depends="prepare"
+          description="Compile Java sample client sources">
+     <!-- Compile Java classes as necessary -->
+     <javac srcdir="${src.dir}/java/controller"
+            destdir="${classes.dir}"
+            includeantruntime="false">
+        <classpath refid="compile.classpath"/>
+    </javac>
+  </target>
+
+   <target name="execute.java" depends="build.java"
+           description="Start program">
+         <echo message="command line execute: java -cp classes:lib/movieGui.jar ser321.movie.SampleMovieClient YourName ${host} ${port.num.streamer}" />
+         <java classname="ser321.movie.SampleMovieClient" fork="yes">
+           <classpath refid="compile.classpath"/>
+         </java>
+   </target>
+
+   <target name="build.cpp" depends="prepare">
+      <cc outtype="executable" subsystem="console"
+          outfile="${dist.dir}/sampleMovieClient"
+          objdir="${obj.dir}">
+         <compilerarg value="${cxxflag}"/>
+         <includepath>
+            <pathelement path="${includepath}"/>
+         </includepath>
+         <libset dir="${client.lib.path}" libs="${client.lib.list}"/>
+         <fileset dir="${src.dir}/cpp" includes="MovieClientGui.cpp,MovieClient.cpp"/>
+      </cc>
+   </target>
+
+   <target name="execute.streamer" depends="prepare"
+           description="execute the simple http server for streaming movie files">
+      <echo message="java -jar lib/tools.jar -port ${port.num.streamer} -dir ${media.dir} -trees -verbose"/>
+      <java jar="${basedir}/lib/tools.jar" fork="true">
+         <arg value="-port"/>
+         <arg value="${port.num.streamer}"/>
+         <arg value="-dir"/>
+         <arg value="${media.dir}"/>
+         <arg value="-trees"/>
+         <arg value="-verbose"/>
+       </java>
+   </target>
+   
+ </project>

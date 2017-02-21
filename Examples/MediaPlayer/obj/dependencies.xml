@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dependencies>
    <includePath signature="/I../../../../../usr/include/jsoncpp">
+<<<<<<< HEAD
       <source file="../src/cpp/MediaClient.cpp" lastModified="14f86224cd8">
+=======
+      <source file="../src/cpp/MediaClient.cpp" lastModified="15a332df008">
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          <include file="../src/cpp/MediaClientGui.cpp"/>
          <sysinclude file="../../../../../../usr/include/FL/Fl.H"/>
          <sysinclude file="../../../../../../usr/include/FL/Fl_Window.H"/>

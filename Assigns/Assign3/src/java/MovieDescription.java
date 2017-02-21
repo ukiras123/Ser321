@@ -1,6 +1,11 @@
 package movie;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+import org.json.JSONObject;
+import org.json.JSONArray;
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 
 /**
  * Copyright (c) 2017 Robert Beerman,
@@ -13,11 +18,19 @@ import java.util.ArrayList;
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Purpose: This class is a representation of a movie description developed for
+<<<<<<< HEAD
  * Assignment 2 of Ser321: MovieLibrary.
  *
  * @author Robert Beerman robert.beerman@asu.edu
  *         Arizona State University, UTO
  * @version 01/21/2017
+=======
+ * Assignment 3 of Ser321: MovieLibrary.
+ *
+ * @author Robert Beerman robert.beerman@asu.edu
+ *         Arizona State University, UTO
+ * @version 01/28/2017
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
  **/
 
 public class MovieDescription {
@@ -64,6 +77,59 @@ public class MovieDescription {
 		genres = new ArrayList<String>();
       genres.add(genre);
    }
+<<<<<<< HEAD
+=======
+   
+   public MovieDescription(JSONObject obj) {
+   	title = obj.getString("Title");
+   	rated = obj.getString("Rated");
+   	released = obj.getString("Released");
+   	runtime = obj.getString("Runtime");
+   	plot = obj.getString("Plot");
+   	filename = obj.getString("Filename");
+   	
+   	actors = new ArrayList<String>();
+   	JSONArray actorArray = obj.getJSONArray("Actors");
+   	for (int i = 0; i < actorArray.length(); i++) {
+   		actors.add(actorArray.get(i).toString());
+   	}
+   	
+   	genres = new ArrayList<String>();
+   	JSONArray genreArray = obj.getJSONArray("Genre");
+   	for (int i = 0; i < genreArray.length(); i++) {
+   		genres.add(genreArray.get(i).toString());
+   	}
+   }
+   
+   public MovieDescription(String jsonObjAsString) {
+   	JSONObject obj = new JSONObject(jsonObjAsString);
+   	
+   	title = obj.getString("Title");
+   	rated = obj.getString("Rated");
+   	released = obj.getString("Released");
+   	runtime = obj.getString("Runtime");
+   	plot = obj.getString("Plot");
+   	filename = title + ".mp4";
+   	
+   	actors = new ArrayList<String>();
+   	String actorsStr = obj.getString("Actors");
+   	String[] actorArray = actorsStr.split(",");
+   	
+   	for (int i = 0; i < actorArray.length; i++) {
+   		actorArray[i] = actorArray[i].trim();
+   		actors.add(actorArray[i]);
+   	}
+   	
+   	genres = new ArrayList<String>();
+   	String genreStr = obj.getString("Genre");
+   	String[] genreArray = genreStr.split(",");
+   	
+   	for (int i = 0; i < genreArray.length; i++) {
+   		genreArray[i] = genreArray[i].trim();
+   		genres.add(genreArray[i]);
+   	}
+   }
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 
    public String getTitle() {
       return title;
@@ -137,6 +203,35 @@ public class MovieDescription {
       genres.add(addedGenre);
    }
    
+<<<<<<< HEAD
+=======
+   public JSONObject toJson() {
+   	JSONObject obj = new JSONObject();
+   	
+   	obj.put("Title", title);
+   	obj.put("Rated", rated);
+   	obj.put("Released", released);
+   	obj.put("Runtime", runtime);
+   	obj.put("Filename", filename);
+   	obj.put("Plot", plot);
+   	
+   	String[] actorArray = new String[actors.size()];
+   	for (int i = 0; i < actorArray.length; i++) {
+   		actorArray[i] = actors.get(i);
+   	}
+   	obj.put("Actors", actorArray);
+   	
+   	
+   	String[] genreArray = new String[genres.size()];
+   	for (int i = 0; i < genreArray.length; i++) {
+   		genreArray[i] = genres.get(i);
+   	}
+   	obj.put("Genre", genreArray);
+   	
+   	return obj;
+   }
+   
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    public String toString() {
    	StringBuilder sb = new StringBuilder();
    	boolean first = true;
@@ -167,6 +262,7 @@ public class MovieDescription {
    
    	return  sb.toString();
    }
+<<<<<<< HEAD
    
    public static void main(String args[]) {
       try {
@@ -225,4 +321,6 @@ public class MovieDescription {
          System.out.println("Oops, you didn't enter the right stuff");
       }
    }
+=======
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 }

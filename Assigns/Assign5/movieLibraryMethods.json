@@ -1,0 +1,27 @@
+[
+	{	// add(JsonOfMovieDescription) --> bool
+		"method": "add",
+		"params": [{}],
+		"returns": true
+	},
+	{  // remove(string) --> bool
+		"method": "remove",
+		"params":["string"],
+		"returns": true
+	},
+	{  // get(string) --> jsonOfAMovieDescription
+		"method": "get",
+		"params":["string"],
+		"returns":{ }
+	},
+	{  // getTitles() --> json array of strings of movie titles
+		"method": "getTitles",
+		"params":[],
+		"returns": [ ]
+	},
+	{  // restoreFromFile(string) --> bool
+		"method": "restoreFromFile",
+		"params": ["string"],
+		"returns": true
+	}
+]
