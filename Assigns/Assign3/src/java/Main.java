@@ -1,5 +1,8 @@
 package movie;
 
+<<<<<<< HEAD
+import org.json.JSONObject;
+=======
 import java.net.URL;
 import java.net.URLConnection;
 import java.io.BufferedReader;
@@ -21,10 +24,14 @@ import java.io.InputStreamReader;
  *         Arizona State University, UTO
  * @version 01/28/2017
  **/
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 
 public class Main {
 	public static void main(String[] args) {
 		try {
+<<<<<<< HEAD
+			MovieLibraryImpl myLib = new MovieLibraryImpl("movies.json");
+=======
 			String moviesFile = "movies.json";
 			String endSaveFile = "moviesSave.json";
 			MovieLibrary lib1 = new MovieLibraryImpl(moviesFile);
@@ -91,11 +98,14 @@ public class Main {
          // saves to moviesSave.json on end, per instructions
          lib1.saveToFile(endSaveFile);
 
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 		} catch(Exception e) {
 			System.out.println("exception: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
+=======
 	
 	public static MovieDescription search(String title) {
 		MovieDescription md = new MovieDescription();
@@ -136,4 +146,5 @@ public class Main {
 		
 		return md;
 	}
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 }

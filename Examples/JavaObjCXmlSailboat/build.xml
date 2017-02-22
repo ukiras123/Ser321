@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- To run this example you must have the following software installed:
+  additional software on any machine:
+     1. Ant version 1.5 or greater
+     2. java development kit.
+     3. objective-C development kit. Either GNUstep on Windows/Linux,
+        or Xcode with command line tools on Mac OS X. See the Resources
+        page of the class web site for links.
+
+  Other example programs for this course use the .NET language C#.
+  If you use windows, you'll need Visual Studio (accessed using command-line
+  dos prompt) on any other system (mac or linux), you'll need to install
+  mono c# development tools (see: http://www.go-mono.com/)
+ 
+ In the lib directory of this project are three jar files that extend ant
+  to provide tasks for compiling c#, for compiling c++, and for dealing with
+  conditionals in ant. Copy these three into ant's lib directory. That is,
+  in lib directory below the directory in which ant is installed on your
+  system. On my system that's /opt/local/java/apache-ant/lib  -->
+<project name="Cst502 Java and Objective Xml reading and writing"
+         default="targets" basedir="."
+         xmlns:dn="antlib:org.apache.ant.dotnet"
+         xmlns:ac="antlib:net.sf.antcontrib"
+         xmlns="antlib:org.apache.tools.ant"
+         xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks">
+
+   <property name="src.dir" value="src"/>
+   <property name="dist.dir" value="obj"/>
+   <property name="build" value="classes"/>
+   <property name="program" value="Sailboat"/>
+   <property environment="env"/>
+   <property name="user" value="${env.USERNAME}"/>
+
+   <target name="targets">
+      <echo message="Targets are clean, prepare, build, buildobjc, and targets"/>
+      <echo message="To execute the objective-C version on Mac: ./obj/SailboatMac"/>
+      <echo message="To execute the objective-C version on Windows: ./obj/SailboatGNUstep.exe"/>
+      <echo message="To execute the Java version: java -cp classes cst502.objcXml.Sailboat"/>
+      <echo message="User name is: ${user}"/>
+      <echo message="basedir is: ${basedir}"/>
+      <echo message="os is: ${os.name}"/>
+   </target>
+
+   <path id="compile.classpath">
+      <pathelement location="${build}"/>
+   </path>
+
+   <target name="prepare">
+      <mkdir dir="${dist.dir}" />
+      <mkdir dir="${build}" />
+   </target>
+
+   <target name="clean">
+      <delete dir="${build}" failonerror="false"/>
+      <delete dir="${dist.dir}" failonerror="false"/>
+   </target>
+
+   <target name="build" depends="prepare">
+      <javac srcdir="${src.dir}/java"
+             includeantruntime="false"
+             destdir="${build}">
+         <classpath refid="compile.classpath"/>
+      </javac>
+      <ac:if>
+        <ac:os family="windows"/>
+        <ac:then>
+           <exec executable="make"/>
+        </ac:then>
+        <ac:else>
+           <exec executable="./xcruncmd"/>
+        </ac:else>
+      </ac:if>
+
+   </target>
+
+   <target name="buildobjc" depends="prepare">
+         <exec osfamily="windows"
+               executable="make">
+         </exec>
+         <exec osfamily="mac"
+               executable="./xcruncmd">
+         </exec>
+   </target>
+
+</project>
+
+

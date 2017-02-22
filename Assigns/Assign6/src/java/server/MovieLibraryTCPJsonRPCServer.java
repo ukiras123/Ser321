@@ -1,5 +1,9 @@
 package server;
 
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
 public class MovieLibraryTCPJsonRPCServer extends Thread {
 	private Socket sock;
 	private int id;
@@ -32,7 +36,37 @@ public class MovieLibraryTCPJsonRPCServer extends Thread {
 			outSock.close();
 			sock.close();
 		} catch(IOException e) {
-			System.out.println("I/O exception occurred for the connection:\n" + e.getMessage());
+			System.out.println("I/O exception occurred for the connection:\n" +
+					e.getMessage());
+		}
+	}
+	
+	public static void main (String args[]) {
+		Socket sock;
+		MovieLibrary movieLibrary = new MovieLibraryImpl();
+		int id = 0;
+		
+		try {
+			if (args.length != 1) {
+				System.out.println("Usage: java server.MovieLibraryTCPJsonRPCServer [portNum]");
+				System.exit(0);
+			}
+			
+			int portNo = Integer.parseInt(args[0]);
+			
+			if (portNo <= 1024) {portNo = 8888;}
+			
+			ServerSocket serv = new ServerSocket(portNo);
+			
+			// accept client requests. For each request create a new thread to handle
+			while (true) {
+				System.out.println("MovieLibrary server waiting for connects on port " + portNo);
+				sock = serv.accept();
+				System.out.println("MovieLibrary server connected to client: " + id);
+				MovieLibraryTCPJsonRPCServer serverThread = 
+						new MovieLibraryTCPJsonRPCServer(sock, id++, movieLibrary);
+				serverThread.start();
+			} catch(Exception e) {e.printStackTrace();}
 		}
 	}
 }

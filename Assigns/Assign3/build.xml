@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<project name="Ser321 Java and C++ Serialization to json"
+=======
 <project name="Ser321 Assignment3"
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          default="targets" basedir="."
          xmlns="antlib:org.apache.tools.ant">
    <taskdef resource="cpptasks.tasks"/>
@@ -7,6 +11,12 @@
    <property name="src" value="./src" />
    <property name="build" value="./classes" />
    <property name="lib" value="./lib" />
+<<<<<<< HEAD
+<!--   <property name="src.cpp.dir" value="src/cpp"/> -->
+<!--   <property name="obj.dir" value="obj"/> -->
+<!--   <property name="dist.dir" value="bin"/> -->
+=======
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    <property environment="env"/>
 
    <path id="compile.classpath">
@@ -15,7 +25,12 @@
    </path>
 
    <target name="targets">
+<<<<<<< HEAD
+     <echo message="targets are clean, prepare, build.java, execute.java, build.cpp"/>
+     <echo message="execute cpp with: ./bin/groupJson"/>
+=======
      <echo message="targets are clean, prepare, build.java, execute.java"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
      <echo message="execute java with: java -cp classes:lib/json.jar movie.Main"/>
    </target>
 
@@ -25,7 +40,12 @@
       <!-- Create the build directory structure used by compile -->
       <echo message="home defined as: ${env.HOME}" />
       <mkdir dir="${build}" />
+<<<<<<< HEAD
+<!--      <mkdir dir="${dist.dir}" /> -->
+<!--      <mkdir dir="${obj.dir}" /> -->
+=======
 
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
       <if>
          <isset property="env.USERNAME"/>
          <then>
@@ -76,12 +96,22 @@
             <echo message="detected a mac host"/>
             <property name="includepath" value="/opt/local/include:/usr/local/include"/>
             <property name="client.lib.path" value="/opt/local/lib"/>
+<<<<<<< HEAD
+            <property name="client.lib.list" value="c++,jsoncpp,stdc++"/>
+=======
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          </then>
       <elseif>
          <isset property="build.host.islinux"/>
          <then>
             <echo message="detected a linux host"/>
+<<<<<<< HEAD
+            <property name="includepath" value="/usr/include/jsoncpp"/>
             <property name="client.lib.path" value="/usr/local/lib"/>
+            <property name="client.lib.list" value="jsoncpp,stdc++"/>
+=======
+            <property name="client.lib.path" value="/usr/local/lib"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          </then>
       </elseif>
       <else>
@@ -108,9 +138,32 @@
          </java>
    </target>
 
+<<<<<<< HEAD
+   <target name="build.cpp" depends="prepare">
+      <echo message="includepath is ${includepath}"/>
+      <cc outtype="executable" subsystem="console"
+          outfile="${dist.dir}/groupJson"
+          objdir="${obj.dir}">
+          <includepath>
+             <pathelement path="${includepath}"/>
+          </includepath>
+          <libset dir="${client.lib.path}" libs="${client.lib.list}"/>
+          <fileset dir="${src.cpp.dir}" includes="Group.cpp,main.cpp,User.cpp"/>
+      </cc>
+   </target>
+
+   <target name="clean">
+     <delete dir="${build}" />
+<!--     <delete file="admin.json"/> -->
+<!--     <delete file="admin.ser"/> -->
+<!--     <delete file="adminFromCPP.json"/> -->
+<!--     <delete dir="${obj.dir}" failonerror="false"/> -->
+<!--     <delete dir="${dist.dir}" failonerror="false"/> -->
+=======
    <target name="clean">
      <delete dir="${build}" />
      <delete file="moviesSave.json"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    </target>
 
 </project>

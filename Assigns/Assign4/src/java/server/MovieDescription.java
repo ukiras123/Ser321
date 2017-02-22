@@ -15,11 +15,19 @@ import org.json.JSONArray;
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Purpose: This class is a representation of a movie description developed for
+<<<<<<< HEAD
+ * Assignment 4 of Ser321: MovieLibrary http server on Raspberry Pi
+ *
+ * @author Robert Beerman robert.beerman@asu.edu
+ *         Arizona State University, UTO
+ * @version 02/10/2017
+=======
  * Assignment 3 of Ser321: MovieLibrary.
  *
  * @author Robert Beerman robert.beerman@asu.edu
  *         Arizona State University, UTO
  * @version 01/28/2017
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
  **/
 
 public class MovieDescription {

@@ -3,11 +3,14 @@ package movie;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
+
 import org.json.JSONString;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
+
+import edu.asu.ser.jsonrpc.common.JsonRpcException;
 
 /**
  * Copyright (c) 2017 Robert Beerman
@@ -31,7 +34,13 @@ public class MovieLibraryImpl implements MovieLibrary {
 	private HashSet<MovieDescription> library;
 	
 	public MovieLibraryImpl() {
+		System.out.println("creating a new Movie Library");
 		library = new HashSet<MovieDescription>();
+		try{
+			this.restoreFromFile("movies.json");
+		} catch(Exception e) {
+			System.out.println("exception" + e.getMessage());
+		}
 	}
 	
 	public MovieLibraryImpl(String jsonFile) {

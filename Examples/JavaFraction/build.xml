@@ -29,8 +29,12 @@
    <target name="build" depends="prepare">
       <javac srcdir="${src.dir}"
              includeantruntime="false"
+<<<<<<< HEAD
+             destdir="${build}">
+=======
              destdir="${build}"
              debug="true">
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          <classpath refid="compile.classpath"/>
       </javac>
    </target>

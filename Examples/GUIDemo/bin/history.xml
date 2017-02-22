@@ -1,9 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="gcc -L../../../../../../usr/local/lib -lfltk -lstdc++">
+<<<<<<< HEAD
+      <target file="mediaClient" lastModified="15a1a62ad98">
+         <source file="../obj/MediaClient.o" lastModified="15a1a62a9b0"/>
+         <source file="../obj/MediaClientGui.o" lastModified="15a1a62a9b0"/>
+=======
       <target file="mediaClient" lastModified="15a331aa2a0">
          <source file="../obj/MediaClient.o" lastModified="15a331a9eb8"/>
          <source file="../obj/MediaClientGui.o" lastModified="15a331a9eb8"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
       </target>
    </processor>
 </history>

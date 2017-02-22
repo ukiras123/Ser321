@@ -1,17 +1,29 @@
 <?xml version="1.0"?>
+<<<<<<< HEAD
+<project name="Ser321 Simple example of Ant to build a Java program."
+=======
 <project name="Ser321 Assignment2."
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          default="targets" basedir="."
          xmlns:dn="antlib:org.apache.ant.dotnet"
          xmlns="antlib:org.apache.tools.ant"
          xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks">
 
+<<<<<<< HEAD
+   <property name="src.dir" value="src"/>
+=======
    <property name="src.dir" value="src/java"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    <property name="build" value="classes"/>
    <property environment="env"/>
 
    <target name="targets">
+<<<<<<< HEAD
+      <echo message="Targets are clean, prepare, build, execute, and targets"/>
+=======
       <echo message=
       "Targets are clean, prepare, build.java, execute.java, and targets"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    </target>
 
    <path id="compile.classpath">
@@ -26,7 +38,11 @@
       <delete dir="${build}" failonerror="false"/>
    </target>
 
+<<<<<<< HEAD
+   <target name="build" depends="prepare">
+=======
    <target name="build.java" depends="prepare">
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
       <javac srcdir="${src.dir}"
              includeantruntime="false"
              destdir="${build}">
@@ -34,10 +50,17 @@
       </javac>
    </target>
 
+<<<<<<< HEAD
+   <target name="execute" depends="build"
+           description="Run the program">
+         <echo message="command line execute: java -cp classes Main" />
+         <java classname="Main" fork="yes">
+=======
    <target name="execute.java" depends="build.java"
            description="Run the program">
          <echo message="command line execute: java -cp classes MovieDescription" />
          <java classname="MovieDescription" fork="yes">
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
            <classpath refid="compile.classpath"/>
          </java>
    </target>

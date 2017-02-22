@@ -3,17 +3,45 @@ package server;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
+<<<<<<< HEAD
+import java.io.FileInputStream;
+import java.io.PrintWriter;
+import java.io.IOException;
+
+import org.json.JSONString;
+=======
 import org.json.JSONString;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import edu.asu.ser.jsonrpc.common.JsonRpcException;
 import edu.asu.ser.jsonrpc.server.HttpServer;
 
+<<<<<<< HEAD
+/**
+ * Copyright (c) 2017 Robert Beerman,
+ *
+ * The author grants to the ASU Software Engineering program the right to copy
+ * and execute this software for evaluation purposes only.
+ * 
+ * The included main method is used, with minor modifications, by permission
+ * from Timothy Lindquist under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Purpose: This class is representation of a MovieLibrary http server
+ * Assignment 4 of Ser321: MovieLibrary http server on Raspberry Pi
+ *
+ * @author Robert Beerman robert.beerman@asu.edu
+ *         Arizona State University, UTO
+ * @version 02/10/2017
+ **/
+=======
 import java.io.IOException;
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
 
 class MovieLibraryHttpServer extends Object implements MovieLibrary {
 	private HashSet<MovieDescription> library;

@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <project name="GUI example with C++ Fltk and Java Swing" default="targets">
    <taskdef resource="cpptasks.tasks"/>
+<<<<<<< HEAD
+ <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+=======
    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
    <property name="src.dir" value="src"/>
    <property name="dist.dir" value="bin"/>
    <property name="classes.dir" value="classes"/>
@@ -112,10 +116,15 @@
   </target>
 
    <target name="build.cpp" depends="prepare">
+<<<<<<< HEAD
+      <cc outtype="executable" subsystem="console" outfile="${dist.dir}/mediaClient" objdir="${obj.dir}">
+       <includepath>
+=======
       <cc outtype="executable" subsystem="console"
           outfile="${dist.dir}/mediaClient"
           objdir="${obj.dir}">
          <includepath>
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
             <pathelement path="${includepath}"/>
          </includepath>
          <libset dir="${lib.path}" libs="${lib.list}"/>

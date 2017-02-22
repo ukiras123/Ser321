@@ -1,10 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="gcc noversion nomachine -c -I../../../../../usr/local/include">
+<<<<<<< HEAD
+      <target file="MediaClientGui.o" lastModified="15a1a62a9b0">
+         <source file="../src/cpp/MediaClientGui.cpp" lastModified="14e9c3a8e00"/>
+      </target>
+      <target file="MediaClient.o" lastModified="15a1a62a9b0">
+=======
       <target file="MediaClientGui.o" lastModified="15a331a9eb8">
          <source file="../src/cpp/MediaClientGui.cpp" lastModified="15a331a8b30"/>
       </target>
       <target file="MediaClient.o" lastModified="15a331a9eb8">
+>>>>>>> 8fa2ddab5d46a08d820f8a7388a1d94d23c026be
          <source file="../src/cpp/MediaClient.cpp" lastModified="14f8f2eb0f0"/>
       </target>
    </processor>
