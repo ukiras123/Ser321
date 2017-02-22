@@ -55,6 +55,7 @@ public class MovieLibrarySkeleton extends Object {
 			System.out.println("exception in callMethod: " + e.getMessage());
 		}
 	
+		return result.toString();
 	}
 
 }

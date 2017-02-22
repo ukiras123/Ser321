@@ -1,4 +1,4 @@
-package movie;
+package server;
 
 /**
  * Copyright (c) 2017 Robert Beerman
@@ -23,7 +23,7 @@ public interface MovieLibrary {
 	boolean remove(String aTitle);
 	MovieDescription get(String aTitle);
 	String[] getTitles();
-	boolean restoreFromFile(String restoreFileName);
-	boolean saveToFile(String saveFileName);
-	String toJSONString();
+	//boolean restoreFromFile(String restoreFileName);
+	//boolean saveToFile(String saveFileName);
+	//String toJSONString();
 }

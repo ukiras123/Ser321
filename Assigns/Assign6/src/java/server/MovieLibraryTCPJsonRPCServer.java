@@ -24,7 +24,7 @@ public class MovieLibraryTCPJsonRPCServer extends Thread {
 			
 			if (numr != -1) {
 				String request = new String(clientInput, 0, numr);
-				Sytem.out.println("request is: " + request);
+				System.out.println("request is: " + request);
 				String response = skeleton.callMethod(request);
 				byte clientOut[] = response.getBytes();
 				outSock.write(clientOut, 0, clientOut.length);
@@ -66,7 +66,8 @@ public class MovieLibraryTCPJsonRPCServer extends Thread {
 				MovieLibraryTCPJsonRPCServer serverThread = 
 						new MovieLibraryTCPJsonRPCServer(sock, id++, movieLibrary);
 				serverThread.start();
-			} catch(Exception e) {e.printStackTrace();}
-		}
+			}
+		} catch(Exception e) {e.printStackTrace();}
 	}
 }
+

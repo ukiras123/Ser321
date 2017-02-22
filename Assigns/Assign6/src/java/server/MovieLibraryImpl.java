@@ -1,4 +1,4 @@
-package movie;
+package server;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import org.json.JSONString;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import edu.asu.ser.jsonrpc.common.JsonRpcException;
+//import edu.asu.ser.jsonrpc.common.JsonRpcException;
 
 /**
  * Copyright (c) 2017 Robert Beerman

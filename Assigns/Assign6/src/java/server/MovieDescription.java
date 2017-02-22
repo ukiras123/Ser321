@@ -1,4 +1,4 @@
-package movie;
+package server;
 
 import java.util.ArrayList;
 import org.json.JSONObject;
