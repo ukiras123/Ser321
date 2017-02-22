@@ -7,10 +7,6 @@ import java.net.URL;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-import server.MovieDescription;
-import server.MovieLibrary;
-import client.MovieLibraryStub;
-
 public class MovieLibraryClient extends Object {
 	public static final boolean debugOn = false;
 		
@@ -53,19 +49,35 @@ public class MovieLibraryClient extends Object {
 						title = title + st.nextToken();
 						if (st.hasMoreTokens()) {title = title + " ";}
 					}
-					MovieDescription result = movieLibrary.get(title);
+
+					JSONObject result = movieLibrary.get(title);
 					System.out.println("Got " + result.toString());
 				} else if (opn.equalsIgnoreCase("getTitles")) {
-					String[] result = movieLibrary.getTitles();
+					//String[] result = movieLibrary.getTitles();
+					JSONArray jsonTitles = movieLibrary.getTitles();
 					System.out.print("The library has the following movies: ");
 					
-					for (int i = 0; i < result.length; i++) {
-						System.out.print(result[i] + ", ");
-					}
-					System.out.println();
+					System.out.print(jsonTitles.toString());
+					
+					//for (int i = 0; i < result.length; i++) {
+						//System.out.print(result[i] + ", ");
+					//}
+					//System.out.println();
 				}  else if (opn.equalsIgnoreCase("remove")) {
-					// TODO implement this
-					System.out.println("remove method not yet implemented in client");
+					String title = "";
+					
+					while (st.hasMoreTokens()) {
+						title = title + st.nextToken();
+						if (st.hasMoreTokens()) {title = title + " ";}
+					}
+					
+					boolean result = movieLibrary.remove(title);
+					
+					if (result) {
+						System.out.println(title + " successfully removed from library");
+					} else {
+						System.out.println(title + " not found, not removed");
+					}
 				}
 				
 				System.out.print("Enter end or {add|get|getTitles|remove} followed by args>");

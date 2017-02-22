@@ -34,9 +34,21 @@ public class MovieLibrarySkeleton extends Object {
 			if (method.equals("add")) {
 				// add a movie description
 			} else if (method.equals("remove")) {
-				// remove a movie description
+				String title = params.getString(0);
+				boolean removeResult = true;
+				try {
+					removeResult = movieLibrary.remove(title);
+				} catch(Exception e) {
+					System.out.println("Remove operation failed. Movie " + title + " not found.");
+				} finally {
+					result.put("result", removeResult);
+				}
 			} else if (method.equals("get")) {
-				// return a movie description
+				String title = params.getString(0);
+				MovieDescription movie = movieLibrary.get(title);
+				JSONObject movieJson = movie.toJson();
+				System.out.println("get request found: " + movieJson.toString());
+				result.put("result", movieJson);
 			} else if (method.equals("getTitles")) {
 				String[] titles = movieLibrary.getTitles();
 				JSONArray resArr = new JSONArray();

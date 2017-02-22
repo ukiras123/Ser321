@@ -23,7 +23,7 @@ public interface MovieLibrary {
 	boolean remove(String aTitle);
 	MovieDescription get(String aTitle);
 	String[] getTitles();
-	//boolean restoreFromFile(String restoreFileName);
-	//boolean saveToFile(String saveFileName);
-	//String toJSONString();
+	boolean restoreFromFile(String restoreFileName);
+	boolean saveToFile(String saveFileName);
+	String toJSONString();
 }

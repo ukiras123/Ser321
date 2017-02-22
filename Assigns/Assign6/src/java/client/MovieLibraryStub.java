@@ -1,7 +1,7 @@
 package client;
 
-import server.MovieDescription;
-import server.MovieLibrary;
+//import server.MovieDescription;
+//import server.MovieLibrary;
 
 import java.net.*;
 import java.io.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-public class MovieLibraryStub extends Object implements MovieLibrary {
+public class MovieLibraryStub extends Object {
 	private static final int buffSize = 4096;
 	private static int id = 0;
 	private String host;
@@ -65,31 +65,44 @@ public class MovieLibraryStub extends Object implements MovieLibrary {
 		return ret;
 	}
 	
-	synchronized public String[] getTitles() {
+	synchronized public JSONArray getTitles() {
 		String[] ret = new String[]{};
 		String result = callMethod("getTitles", new Object[0]);
 		System.out.println("result of getTitles is: " + result);
 		JSONObject res = new JSONObject(result);
 		JSONArray titlesJson = res.optJSONArray("result");
-		ret = new String [titlesJson.length()];
 		
-		for (int i = 0; i < titlesJson.length(); i++) {
-			ret[i] = titlesJson.optString(i, "unknown");
-		}
+		return titlesJson;
+		//ret = new String [titlesJson.length()];
 		
-		return ret;
+		//for (int i = 0; i < titlesJson.length(); i++) {
+			//ret[i] = titlesJson.optString(i, "unknown");
+		//}
+		
+		//return ret;
 	}
 	
-	public boolean add(MovieDescription aClip) {
-		return false;
+	//synchronized public boolean add(MovieDescription aClip) {
+		//return false;
+	//}
+	
+	synchronized public boolean remove(String title) {
+		boolean movieRemoved = false;
+		String result = callMethod("remove", new Object[]{title});
+		
+		System.out.println("result of remove is: " + result);
+		
+		JSONObject jsonResult = new JSONObject(result);
+		movieRemoved = jsonResult.getBoolean("result");
+		
+		return movieRemoved;
 	}
 	
-	public boolean remove(String aTitle) {
-		return false;
-	}
-	
-	public MovieDescription get(String aTitle) {
-		return new MovieDescription();
+	synchronized public JSONObject get(String title) {
+		String result = callMethod("get", new Object[]{title});
+		System.out.println("result of get from server is: " + result);
+		JSONObject jsonRes = new JSONObject(result);
+		return jsonRes;		
 	}
 
 }
