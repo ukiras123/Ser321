@@ -102,7 +102,7 @@ public class MovieLibraryImpl implements MovieLibrary {
 		return true;
 	}
 	
-	public boolean add(MovieDescription aClip) {
+	synchronized public boolean add(MovieDescription aClip) {
 		if (aClip != null) {			
 			library.add(aClip);
 			System.out.println("Successfully added " + aClip.getTitle() + " to library");
@@ -112,7 +112,7 @@ public class MovieLibraryImpl implements MovieLibrary {
 		return false;
 	}
 	
-	public boolean remove(String aTitle) {
+	synchronized public boolean remove(String aTitle) {
 		MovieDescription movie = get(aTitle);
 		
 		if (movie != null) {
@@ -123,7 +123,7 @@ public class MovieLibraryImpl implements MovieLibrary {
 		return false;
 	}
 	
-	public MovieDescription get(String aTitle) {
+	synchronized public MovieDescription get(String aTitle) {
 		Iterator<MovieDescription> iter = library.iterator();
 		
 		while (iter.hasNext()) {
@@ -136,7 +136,7 @@ public class MovieLibraryImpl implements MovieLibrary {
 		return null;
 	}
 	
-	public String[] getTitles() {
+	synchronized public String[] getTitles() {
 		String[] titles = new String[library.size()];
 		Iterator<MovieDescription> iter = library.iterator();
 		int position = 0;

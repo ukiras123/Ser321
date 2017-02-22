@@ -39,7 +39,7 @@ public interface MovieLibrary {
 	public boolean remove(String aTitle) throws JsonRpcException;
 	public MovieDescription get(String aTitle) throws JsonRpcException;
 	public String[] getTitles() throws JsonRpcException;
-	public boolean restoreFromFile(String restoreFileName) throws JsonRpcException;
-	public boolean saveToFile(String saveFileName) throws JsonRpcException;
-	public String toJSONString() throws JsonRpcException;
+	//public boolean restoreFromFile(String restoreFileName) throws JsonRpcException;
+	//public boolean saveToFile(String saveFileName) throws JsonRpcException;
+	//public String toJSONString() throws JsonRpcException;
 }

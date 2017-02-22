@@ -65,7 +65,7 @@ public class MovieLibraryStub extends Object implements MovieLibrary {
 		return ret;
 	}
 	
-	public String[] getTitles() {
+	synchronized public String[] getTitles() {
 		String[] ret = new String[]{};
 		String result = callMethod("getTitles", new Object[0]);
 		System.out.println("result of getTitles is: " + result);

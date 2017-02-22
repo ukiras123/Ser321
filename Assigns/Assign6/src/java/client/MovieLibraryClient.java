@@ -27,7 +27,7 @@ public class MovieLibraryClient extends Object {
 		try {
 			if (args.length >= 2) {
 				host = args[0];
-				host = args[1];
+				port = args[1];
 			}
 			
 			String url = "http://" + host + ":" + port + "/";
@@ -44,11 +44,17 @@ public class MovieLibraryClient extends Object {
 			
 			while (!opn.equalsIgnoreCase("end")) {
 				if (opn.equalsIgnoreCase("add")) {
-				// TODO implement this
+
 					System.out.println("add method not yet implemented in client");
 				} else if (opn.equalsIgnoreCase("get")) {
-				// TODO implement this
-					System.out.println("get method not yet implemented in client");
+					String title = "";
+					
+					while (st.hasMoreTokens()) {
+						title = title + st.nextToken();
+						if (st.hasMoreTokens()) {title = title + " ";}
+					}
+					MovieDescription result = movieLibrary.get(title);
+					System.out.println("Got " + result.toString());
 				} else if (opn.equalsIgnoreCase("getTitles")) {
 					String[] result = movieLibrary.getTitles();
 					System.out.print("The library has the following movies: ");
