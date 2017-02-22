@@ -1,7 +1,5 @@
 package client;
 
-//import server.MovieDescription;
-//import server.MovieLibrary;
 
 import java.net.*;
 import java.io.*;
@@ -82,9 +80,15 @@ public class MovieLibraryStub extends Object {
 		//return ret;
 	}
 	
-	//synchronized public boolean add(MovieDescription aClip) {
-		//return false;
-	//}
+	synchronized public boolean add(JSONObject movieDesc) {
+		boolean movieAdded = false;
+		String result = callMethod("add", new Object[]{movieDesc});
+		JSONObject jsonResult = new JSONObject(result);
+		
+		movieAdded = jsonResult.optBoolean("result", false);
+		
+		return movieAdded;
+	}
 	
 	synchronized public boolean remove(String title) {
 		boolean movieRemoved = false;

@@ -32,7 +32,11 @@ public class MovieLibrarySkeleton extends Object {
 			result.put("jsonrpc", "2.0");
 			
 			if (method.equals("add")) {
-				// add a movie description
+				JSONObject movieJson = params.getJSONObject(0);
+				MovieDescription movieToAdd = new MovieDescription(movieJson);
+				System.out.println("adding movie: " + movieToAdd.toString());
+				movieLibrary.add(movieToAdd);
+				result.put("result", true);
 			} else if (method.equals("remove")) {
 				String title = params.getString(0);
 				boolean removeResult = true;
