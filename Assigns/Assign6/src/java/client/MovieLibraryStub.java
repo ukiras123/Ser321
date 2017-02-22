@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-public class MovieLibraryTcpProxy extends Object implements MovieLibrary {
+public class MovieLibraryStub extends Object implements MovieLibrary {
 	private static final int buffSize = 4096;
 	private static int id = 0;
 	private String host;
 	private int port;
 	
-	public MovieLibraryTcpProxy (String host, int port) {
+	public MovieLibraryStub (String host, int port) {
 		this.host = host;
 		this.port = port;
 	}
@@ -63,6 +63,33 @@ public class MovieLibraryTcpProxy extends Object implements MovieLibrary {
 		}
 		
 		return ret;
+	}
+	
+	public String[] getTitles() {
+		String[] ret = new String[]{};
+		String result = callMethod("getTitles", new Object[0]);
+		System.out.println("result of getTitles is: " + result);
+		JSONObject res = new JSONObject(result);
+		JSONArray titlesJson = res.optJSONArray("result");
+		ret = new String [titlesJson.length()];
+		
+		for (int i = 0; i < titlesJson.length(); i++) {
+			ret[i] = titlesJson.optString(i, "unknown");
+		}
+		
+		return ret;
+	}
+	
+	public boolean add(MovieDescription aClip) {
+		return false;
+	}
+	
+	public boolean remove(String aTitle) {
+		return false;
+	}
+	
+	public MovieDescription get(String aTitle) {
+		return new MovieDescription();
 	}
 
 }
