@@ -24,12 +24,10 @@ public class MovieLibraryStub extends Object {
 		String ret = "{}";
 		
 		try {
-			System.out.println("Request is: " + theCall.toString());
-			
 			theCall.put("method", method);
 			theCall.put("id", id);
 			theCall.put("jsonrpc", "2.0");
-			ArrayList<Object> al = new ArrayList();
+			ArrayList<Object> al = new ArrayList<Object>();
 			
 			for (int i = 0; i < params.length; i++) {
 				al.add(params[i]);
@@ -37,6 +35,8 @@ public class MovieLibraryStub extends Object {
 			
 			JSONArray paramsJson = new JSONArray(al);
 			theCall.put("params", paramsJson);
+			
+			System.out.println("Request is: " + theCall.toString());
 			
 			Socket sock = new Socket(host, port);
 			OutputStream os = sock.getOutputStream();
@@ -71,13 +71,6 @@ public class MovieLibraryStub extends Object {
 		JSONArray titlesJson = res.optJSONArray("result");
 		
 		return titlesJson;
-		//ret = new String [titlesJson.length()];
-		
-		//for (int i = 0; i < titlesJson.length(); i++) {
-			//ret[i] = titlesJson.optString(i, "unknown");
-		//}
-		
-		//return ret;
 	}
 	
 	synchronized public boolean add(JSONObject movieDesc) {

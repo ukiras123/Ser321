@@ -8,12 +8,18 @@ public class MovieLibraryTCPJsonRPCServer extends Thread {
 	private Socket sock;
 	private int id;
 	private MovieLibrarySkeleton skeleton;
+	private boolean debugOn = false;
 	
 	public MovieLibraryTCPJsonRPCServer(Socket sock, int id, MovieLibrary movieLibrary) {
 		this.sock = sock;
 		this.id = id;
 		skeleton = new MovieLibrarySkeleton(movieLibrary);
 	}
+	
+	private void debug(String message) {
+      if (debugOn)
+         System.out.println("debug: "+message);
+   }
 	
 	public void run() {
 		try {
@@ -24,12 +30,12 @@ public class MovieLibraryTCPJsonRPCServer extends Thread {
 			
 			if (numr != -1) {
 				String request = new String(clientInput, 0, numr);
-				System.out.println("request is: " + request);
+				debug("request is: " + request);
 				String response = skeleton.callMethod(request);
 				byte clientOut[] = response.getBytes();
 				outSock.write(clientOut, 0, clientOut.length);
 				
-				System.out.println("response is: " + response);
+				debug("response is: " + response);
 			}
 			
 			inSock.close();

@@ -5,7 +5,8 @@
    <property name="src.dir" value="src"/>
    <property name="classes.dir" value="classes"/>
    <property name="host.name" value="127.0.0.1"/>
-   <property name="port.num" value="8888"/>
+   <property name="library.port.num" value="8888"/>
+<!--   <property name="video.port.num" value="2020"/> -->
 <!--  <property name="json.file.name" value="MovieLibraryMethods.json"/> -->
    <property environment="env"/>
    <!--Set the ostype property: <property name="ostype" value="${env.OSTYPE}"/>-->
@@ -19,19 +20,17 @@
     </condition>
 
    <target name="targets">
-      <echo message="Targets are clean, prepare, build.all, build.java.server, build.java.client, targets"/>
+      <echo message="Targets are clean, prepare, build.all, build.java.server, build.java.fileServer, build.java.client, targets"/>
       <echo message="base directory is: ${basedir}"/>
       <echo message="ostype is ${ostype}"/>
-      <echo message="invoke java tcp server with: java -cp classes:lib/json.jar server.MovieLibraryTCPJsonRPCServer ${port.num}"/>
-      <echo message="invoke java controller with: java -cp classes:lib/* controller.MovieBrowserApp aName ${host.name} ${port.num}"/>
+      <echo message="invoke java tcp server with: java -cp classes:lib/json.jar server.MovieLibraryTCPJsonRPCServer ${library.port.num}"/>
+      <echo message="invoke java tcp file server with: java -cp classes server.ThreadedMovieSockServer"/>
+      <echo message="invoke java controller with: java -cp classes:lib/* client.MovieBrowserApp ${host.name} ${library.port.num}"/>
    </target>
 
    <path id="compile.classpath">
       <pathelement location="${classes.dir}"/>
-      <fileset dir="${basedir}/lib">
-<!--         <include name="json.jar"/>-->
-<!--         <include name="movieGui.jar"/>-->
-      </fileset>
+      <fileset dir="${basedir}/lib"/>
    </path>
 
    <target name="clean">
@@ -43,13 +42,13 @@
    </target>
 
    <target name="build.all"
-           depends="clean,prepare,build.java.server,build.java.stub,build.java.client"
-           description="Clean then build java server, java stub, and java client"/>
+           depends="clean,prepare,build.java.server,build.java.fileServer,build.java.client"
+           description="Clean then build java server, java file server, java stub, and java client"/>
 
    <target name="build.java.server" depends="prepare"
           description="Compile Java server sources">
      <!-- Compile Java server classes as necessary -->
-     <echo message="tcp server: java -cp classes:lib/json.jar server.MovieLibraryTCPJsonRPCServer ${port.num}"/>
+     <echo message="tcp server: java -cp classes:lib/json.jar server.MovieLibraryTCPJsonRPCServer ${library.port.num}"/>
      <javac srcdir="${src.dir}/java/server"
             destdir="${classes.dir}"
             includeantruntime="false">
@@ -57,27 +56,19 @@
     </javac>
    </target>
    
-<!--   <target name="build.java.client" depends="build.java.server"-->
-<!--          description="Compile Java client sources">-->
-<!--     <echo message="execute client: java -cp classes:lib/json.jar client.MovieLibraryClient ${host.name} ${port.num}"/>-->
-<!--     <javac srcdir="${src.dir}/java/client"-->
-<!--            destdir="${classes.dir}"-->
-<!--            includeantruntime="false">-->
-<!--        <classpath refid="compile.classpath"/>-->
-<!--     </javac>-->
-<!--   </target>-->
+	<target name="build.java.fileServer"
+          description="Compile Java client sources">
+     <echo message="execute client: java -cp classes server.ThreadedMovieSockServer"/>
+     <javac srcdir="${src.dir}/java/server"
+            destdir="${classes.dir}"
+            includeantruntime="false">
+        <classpath refid="compile.classpath"/>
+     </javac>
+   </target>
 
-	<target name="build.java.stub" depends="build.java.server" description="Compile Java stub sources">
+	<target name="build.java.client" description="Compile GUI controller">
+		<echo message="execute controller: java -cp classes:lib/* client.MovieBrowserApp ${host.name} ${library.port.num}"/>
 		<javac srcdir="${src.dir}/java/client"
-					destdir="${classes.dir}"
-					includeantruntime="false">
-			<classpath refid="compile.classpath"/>
-		</javac>
-	</target>
-	
-	<target name="build.java.client" depends="build.java.stub" description="Compile GUI controller">
-		<echo message="execute controller: java -cp classes:lib/* controller.MovieBrowserApp aName ${host.name} ${port.num}"/>
-		<javac srcdir="${src.dir}/java/controller"
 					destdir="${classes.dir}"
 					includeantruntime="false">
 			<classpath refid="compile.classpath"/>

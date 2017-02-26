@@ -1,4 +1,4 @@
-package controller;
+package client;
 
 import javax.swing.*;
 import java.io.*;
@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
 import java.lang.Runtime;
+import java.lang.reflect.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -55,7 +56,7 @@ public class MovieBrowserApp extends MovieLibraryGui implements
             userMenuItems[i][j].addActionListener(this);
          }
       }
-      //tree.addTreeWillExpandListener(this);
+
       try{
          tree.addTreeSelectionListener(this);
          rebuildTree();
@@ -94,7 +95,6 @@ public class MovieBrowserApp extends MovieLibraryGui implements
    }
    
    public void rebuildTree(){
-      //String[] videoList = {"The Force Awakens","2012","Race","The Internship","Annie","My Old Lady"};
       try {
       	JSONArray jsonVideoList = movieLibrary.getTitles();
       	String[] videoList = new String[jsonVideoList.length()];
@@ -102,38 +102,27 @@ public class MovieBrowserApp extends MovieLibraryGui implements
       	for (int i = 0; i < jsonVideoList.length(); i++) {
       		videoList[i] = jsonVideoList.get(i).toString();
       	}
-      	
-		   String[] videoGenre = {"Action","Action","Biography","Comedy","Comedy","Comedy"};
+
 		   tree.removeTreeSelectionListener(this);
 		   DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
 		   DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 		   clearTree(root, model);
-		   DefaultMutableTreeNode videoNode = new DefaultMutableTreeNode("Video");
+		   DefaultMutableTreeNode videoNode = new DefaultMutableTreeNode("Movie");
 		   model.insertNodeInto(videoNode, root, model.getChildCount(root));
+		   
 		   // put nodes in the tree for all video
 		   for (int i = 0; i<videoList.length; i++){
 		      String aTitle = videoList[i];
-		      String aGenre = videoGenre[i];
 		      DefaultMutableTreeNode toAdd = new DefaultMutableTreeNode(aTitle);
-		      DefaultMutableTreeNode subNode = getSubLabelled(videoNode,aGenre);
-		      if(subNode!=null){ // if album subnode already exists
-		         model.insertNodeInto(toAdd, subNode, model.getChildCount(subNode));
-		      }else{ // album node does not exist
-		         DefaultMutableTreeNode anAlbumNode =
-		            new DefaultMutableTreeNode(aGenre);
-		         model.insertNodeInto(anAlbumNode, videoNode,
-		                              model.getChildCount(videoNode));
-		         DefaultMutableTreeNode aSubCatNode = 
-		            new DefaultMutableTreeNode("aSubCat");
-		         //debug("adding subcat labelled: "+"aSubCat");
-		         model.insertNodeInto(toAdd,anAlbumNode,
-		                              model.getChildCount(anAlbumNode));
-		      }
+		      
+		      model.insertNodeInto(toAdd, videoNode, i);
 		   }
+		   
 		   // expand all the nodes in the JTree
 		   for(int r =0; r < tree.getRowCount(); r++){
 		      tree.expandRow(r);
 		   }
+		   
 		   tree.addTreeSelectionListener(this);
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -146,34 +135,12 @@ public class MovieBrowserApp extends MovieLibraryGui implements
          int subs = model.getChildCount(root);
          for(int k=subs-1; k>=0; k--){
             next = (DefaultMutableTreeNode)model.getChild(root,k);
-            //debug("removing node labelled:"+(String)next.getUserObject());
             model.removeNodeFromParent(next);
          }
       }catch (Exception ex) {
          System.out.println("Exception while trying to clear tree:");
          ex.printStackTrace();
       }
-   }
-
-   private DefaultMutableTreeNode getSubLabelled(DefaultMutableTreeNode root,
-                                                 String label){
-      DefaultMutableTreeNode ret = null;
-      DefaultMutableTreeNode next = null;
-      boolean found = false;
-      for(Enumeration e = root.children(); e.hasMoreElements();){
-         next = (DefaultMutableTreeNode)e.nextElement();
-         debug("sub with label: "+(String)next.getUserObject());
-         if (((String)next.getUserObject()).equals(label)){
-            debug("found sub with label: "+label);
-            found = true;
-            break;
-         }
-      }
-      if(found)
-         ret = next;
-      else
-         ret = null;
-      return ret;
    }
 
    public void treeWillCollapse(TreeExpansionEvent tee) {
@@ -183,10 +150,6 @@ public class MovieBrowserApp extends MovieLibraryGui implements
 
    public void treeWillExpand(TreeExpansionEvent tee) {
       debug("In treeWillExpand with path: "+tee.getPath());
-      //DefaultMutableTreeNode dmtn =
-      //    (DefaultMutableTreeNode)tee.getPath().getLastPathComponent();
-      //System.out.println("will expand node: "+dmtn.getUserObject()+
-      //		   " whose path is: "+tee.getPath());
    }
 
    public void valueChanged(TreeSelectionEvent e) {
@@ -200,19 +163,35 @@ public class MovieBrowserApp extends MovieLibraryGui implements
             // is this a terminal node?
             if(node.getChildCount()==0 &&
                (node != (DefaultMutableTreeNode)tree.getModel().getRoot())){
-               plotJTA.append(nodeLabel+", ");
+               
+					JSONObject movie = movieLibrary.get(nodeLabel).getJSONObject("result");
+               
                titleJTF.setText(nodeLabel);
-               if (!contains(genreJCB, nodeLabel)){
-                  genreJCB.removeActionListener(this);
-                  genreJCB.addItem(nodeLabel);
-                  int i = 0;
-                  while(i<genreJCB.getItemCount()&&
-                        !((String)genreJCB.getItemAt(i)).equals(nodeLabel)){
-                     i++;
-                  }
-                  genreJCB.setSelectedIndex(i);
-                  genreJCB.addActionListener(this);
+               releasedJTF.setText(movie.getString("Released"));
+               runtimeJTF.setText(movie.getString("Runtime"));
+               ratedJTF.setText(movie.getString("Rated"));
+               plotJTA.setText(movie.getString("Plot"));
+               fileNameJTF.setText(movie.getString("Filename"));
+               
+               JSONArray jsonActorsArray = movie.getJSONArray("Actors");
+               actorsJCB.removeActionListener(this);
+         		actorsJCB.removeAllItems();
+         
+               for (int i = 0; i < jsonActorsArray.length(); i++) {
+               	actorsJCB.addItem(jsonActorsArray.getString(i));
                }
+               
+               actorsJCB.addActionListener(this);
+               
+               JSONArray jsonGenreArray = movie.getJSONArray("Genre");
+               genreJCB.removeActionListener(this);
+         		genreJCB.removeAllItems();
+         
+               for (int i = 0; i < jsonGenreArray.length(); i++) {
+               	genreJCB.addItem(jsonGenreArray.getString(i));
+               }
+               
+               genreJCB.addActionListener(this);
             }else{
                plotJTA.setText("You selected: ");
             }
@@ -237,13 +216,21 @@ public class MovieBrowserApp extends MovieLibraryGui implements
    public void actionPerformed(ActionEvent e) {
       tree.removeTreeSelectionListener(this);
       if(e.getActionCommand().equals("Exit")) {
+      	File videoFile = new File(System.getProperty("user.dir") + "/MachuPicchuTimelapseVimeo.mp4");
+      	if (videoFile.exists()) {
+      		videoFile.delete();
+      	}
          System.exit(0);
       }else if(e.getActionCommand().equals("NewActor")) {
          debug("new actor selected "+(String)actorsJCB.getSelectedItem());
          if(!contains(actorsJCB,(String)actorsJCB.getSelectedItem())){
             actorsJCB.addItem((String)actorsJCB.getSelectedItem());
          }
-         releasedJTF.setText((String)actorsJCB.getSelectedItem());
+      }else if(e.getActionCommand().equals("NewGenre")) {
+         debug("new genre selected "+(String)genreJCB.getSelectedItem());
+         if(!contains(genreJCB,(String)genreJCB.getSelectedItem())){
+            genreJCB.addItem((String)genreJCB.getSelectedItem());
+         }
       }else if(e.getActionCommand().equals("ClearActors")) {
          actorsJCB.removeActionListener(this);
          actorsJCB.removeAllItems();
@@ -253,31 +240,101 @@ public class MovieBrowserApp extends MovieLibraryGui implements
          genreJCB.removeAllItems();
          genreJCB.addActionListener(this);
       }else if(e.getActionCommand().equals("Save")) {
-         plotJTA.append("Save, ");
-         rebuildTree();
-         // what to do with boolean returns by server methods
-         debug("Save "+((true)?"successful":"unsuccessful"));
+         debug("Save function not implemented, per requirements");
       }else if(e.getActionCommand().equals("Restore")) {
-         plotJTA.append("Restore, ");
+         debug("Restore function not implemented, per requirements");
       }else if(e.getActionCommand().equals("Tree Refresh")) {
-         plotJTA.append("Tree Refresh, ");
          rebuildTree(); // contact the server to obtain all current titles then rebuild
       }else if(e.getActionCommand().equals("Add")) {
-         plotJTA.append("Add, ");
+	      JSONObject movieToAdd = new JSONObject();
+	      
+	      movieToAdd.put("Title", titleJTF.getText());
+         movieToAdd.put("Runtime", runtimeJTF.getText());
+         movieToAdd.put("Released", releasedJTF.getText());
+         movieToAdd.put("Rated", ratedJTF.getText());
+         movieToAdd.put("Plot", plotJTA.getText());
+         movieToAdd.put("Filename", fileNameJTF.getText());
+         
+      	// build the JSONArray containing the actor list
+      	String[] actorsArray = new String[actorsJCB.getItemCount()];
+      	
+      	for (int i = 0; i < actorsJCB.getItemCount(); i++) {
+      		actorsArray[i] = actorsJCB.getItemAt(i);
+      	}
+      	
+         JSONArray jsonActorsArray = new JSONArray(actorsArray);
+         movieToAdd.put("Actors", jsonActorsArray);
+         
+         // build the JSONArray containing the genre list
+         String[] genreArray = new String[genreJCB.getItemCount()];
+      	
+      	for (int i = 0; i < genreJCB.getItemCount(); i++) {
+      		genreArray[i] = genreJCB.getItemAt(i);
+      	}
+      	
+         JSONArray jsonGenreArray = new JSONArray(genreArray);
+         movieToAdd.put("Genre", jsonGenreArray);
+         
+         if (movieLibrary.add(movieToAdd)) {
+         	rebuildTree();
+         }
       }else if(e.getActionCommand().equals("Remove")) {
-         plotJTA.append("Remove, ");
+         DefaultMutableTreeNode node =
+         		(DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+         
+         if(node!=null){
+            String nodeLabel = (String)node.getUserObject();
+            if(node.getChildCount()==0 &&
+               	(node != (DefaultMutableTreeNode)tree.getModel().getRoot())){
+               
+            	if(movieLibrary.remove(nodeLabel)) {
+            		rebuildTree();
+            	}
+            }
+         }
       }else if(e.getActionCommand().equals("Play")){
-         plotJTA.append("Play, ");
-         try{
+         Socket sock = null;
+         
+         try {
+         	sock = new Socket(host, 2020);
+         	ObjectOutputStream os = new ObjectOutputStream(sock.getOutputStream());
+         	ObjectInputStream is = new ObjectInputStream(sock.getInputStream());
+         	int fileSize = 0;
+         	int bytesRead = 0;
+
+				
+         	for (int i = 0; i < 2; i++) {
+         		if (i == 0) {
+         			os.writeObject("MachuPicchuTimelapseVimeo.mp4");
+         			fileSize = is.readInt();
+         		} else {
+         			byte[] fileByteArray = new byte[fileSize];
+         			BufferedOutputStream bos = new BufferedOutputStream(
+         												new FileOutputStream(System.getProperty("user.dir") + "/MachuPicchuTimelapseVimeo.mp4"));
+         			
+         			while (bytesRead < fileSize) {
+         				int result = is.read(fileByteArray, bytesRead, fileSize - bytesRead);
+         				if (result == -1) break;
+         				bytesRead += result;
+         			}
+
+         			bos.write(fileByteArray, 0, fileSize);
+         			bos.flush();
+         			bos.close();
+         		}
+         	}
+         	
+         	debug("File downloaded");
+         	
             String nodeLabel = "Machu Picchu Time Lapse";
             titleJTF.setText(nodeLabel);
-            //String aURIPath = "file://"+System.getProperty("user.dir")+
-            //                  "/MachuPicchuTimelapseVimeo.mp4";
-            String aURIPath = "http://"+host+":"+port+
+            String aURIPath = "file://"+System.getProperty("user.dir")+
                               "/MachuPicchuTimelapseVimeo.mp4";
             playMovie(aURIPath, nodeLabel);
-         }catch(Exception ex){
-            System.out.println("Execption trying to play movie:");
+            
+
+         } catch(Exception ex){
+            System.out.println("Exception trying to play movie:");
             ex.printStackTrace();
          }
       }
@@ -290,9 +347,9 @@ public class MovieBrowserApp extends MovieLibraryGui implements
    
    public static void main(String args[]) {
       try{
-         String authorName = (args.length>=1)?args[0]:"Robert Beermans Library";
-         String aHost = (args.length>=2)?args[1]:"127.0.0.1";
-         String aPort = (args.length>=3)?args[2]:"8888";
+         String authorName = "Robert Beermans Library";
+         String aHost = (args.length>=1)?args[0]:"127.0.0.1";
+         String aPort = (args.length>=2)?args[1]:"8888";
          System.out.println("calling constructor name " + authorName);
          MovieBrowserApp mba = new MovieBrowserApp(authorName, aHost, aPort);
       }catch (Exception ex){
